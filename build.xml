@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project name="JAR Demos" default="jar1" basedir=".">
+    <property name="rserve.version" value="1.7-0"/>
+    <property name="jri.version" value="0.9-4"/>
+    <property name="dir.jri" value="rJava/jri/"/>
+    <property name="dir.jriengine" value="Rserve/clients/java-new/JRI/"/>
+    <property name="dir.rengine" value="Rserve/clients/java-new/"/>
+  <target name="jri">
+      <exec executable="make" dir="${dir.jri}">
+          <arg value="src/JRI.jar"/>
+        <arg value="doc"/>
+      </exec>
+  </target>
+  <target name="rengine" depends="jri">
+      <exec executable="make" dir="${dir.rengine}">
+        <arg value="REngine.jar"/>
+        <arg value="doc"/>
+      </exec>
+  </target>
+  <target name="jriengine" depends="rengine">
+      <exec executable="make" dir="${dir.jriengine}">
+        <arg value="JRIEngine.jar"/>
+        <arg value="doc"/>
+      </exec>
+      <javadoc sourcepath="${dir.jriengine}" destdir="${dir.jriengine}/doc">
+      </javadoc>
+  </target>
+   <target name="JRI" depends="jri" description="Build all JRI artifacts">
+      <jar jarfile="JRI-${jri.version}-javadoc.jar" basedir="${dir.jri}/JavaDoc/"/>
+      <jar jarfile="JRI-${jri.version}-source.jar" basedir="${dir.jri}"/>
+      <move file="${dir.jri}/src/JRI.jar" tofile="JRI-${jri.version}.jar"/>
+   </target>
+   <target name="REngine" depends="rengine" description="Build all REngine artifacts">
+       <move file="${dir.rengine}/REngine.jar" tofile="REngine-${rserve.version}.jar"/>
+       <jar jarfile="REngine-${rserve.version}-javadoc.jar" basedir="${dir.rengine}/doc/"/>
+       <jar jarfile="REngine-${rserve.version}-source.jar" basedir="${dir.rengine}"/>
+   </target>
+   <target name="JRIEngine" depends="jriengine" description="Build all JRIEngine artifacts">
+       <move file="${dir.jriengine}/JRIEngine.jar" tofile="JRIEngine-${rserve.version}.jar"/>
+       <jar jarfile="JRIEngine-${rserve.version}-javadoc.jar" basedir="${dir.jriengine}/doc/"/>
+       <jar jarfile="JRIEngine-${rserve.version}-source.jar" basedir="${dir.jriengine}"/>
+   </target>
+   <target name="sign_jars" depends="JRI,JRIEngine,REngine"
+                   description="Sign rJava source jars">
+       <apply executable="gpg">
+          <arg value="-ab"/>
+          <arg value="--yes"/>
+          <fileset dir="./">
+              <include name="*.jar"/>
+              <exclude name="rJava-*.jar"/>
+          </fileset>
+       </apply>
+   </target>
+   <target name="bundles" depends="sign_jars"
+                   description="Bundle rJava source jars">
+               <jar jarfile="JRI-bundle.jar" basedir="." >
+                   <include name="JRI-${jri.version}*"/>
+               </jar>
+               <jar jarfile="JRIEngine-bundle.jar" basedir="." >
+                   <include name="JRIEngine-${rserve.version}*"/>
+               </jar>
+               <jar jarfile="REngine-bundle.jar" basedir="." >
+                   <include name="REngine-${rserve.version}*"/>
+               </jar>
+   </target>
+</project>
