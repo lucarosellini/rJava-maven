@@ -4,7 +4,7 @@
   <artifactId>JRIEngine</artifactId>
   <packaging>jar</packaging>
   <name>JRI core</name>
-  <version>1.7-3</version>
+  <version>0.9-7</version>
   <description>
 JRI is a Java/R Interface, which allows to run R inside Java applications as a single thread. Basically it loads R dynamic library into Java and provides a Java API to R functionality. It supports both simple calls to R functions and a full running REPL.
 </description>

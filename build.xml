@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <project name="JAR Demos" default="bundles" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
-    <property name="rserve.version" value="1.7-3"/>
     <property name="jri.version" value="0.9-7"/>
     <property name="dir.jri" value="rJava/jri/"/>
     <property name="dir.jriengine" value="rJava/jri/REngine/JRI"/>
@@ -43,18 +42,18 @@
 
    <target name="JRI" depends="jri" description="Build all JRI artifacts">
       <jar jarfile="JRI-${jri.version}-javadoc.jar" basedir="${dir.jri}/JavaDoc/"/>
-      <jar jarfile="JRI-${jri.version}-source.jar" basedir="${dir.jri}"/>
+      <jar jarfile="JRI-${jri.version}-sources.jar" basedir="${dir.jri}"/>
       <move file="${dir.jri}/src/JRI.jar" tofile="JRI-${jri.version}.jar"/>
    </target>
    <target name="REngine" depends="rengine" description="Build all REngine artifacts">
-       <move file="${dir.rengine}/REngine.jar" tofile="REngine-${rserve.version}.jar"/>
-       <jar jarfile="REngine-${rserve.version}-javadoc.jar" basedir="${dir.rengine}/doc/"/>
-       <jar jarfile="REngine-${rserve.version}-source.jar" basedir="${dir.rengine}"/>
+       <move file="${dir.rengine}/REngine.jar" tofile="REngine-${jri.version}.jar"/>
+       <jar jarfile="REngine-${jri.version}-javadoc.jar" basedir="${dir.rengine}/doc/"/>
+       <jar jarfile="REngine-${jri.version}-sources.jar" basedir="${dir.rengine}"/>
    </target>
    <target name="JRIEngine" depends="jriengine" description="Build all JRIEngine artifacts">
-       <move file="${dir.jriengine}/JRIEngine.jar" tofile="JRIEngine-${rserve.version}.jar"/>
-       <jar jarfile="JRIEngine-${rserve.version}-javadoc.jar" basedir="${dir.jriengine}/doc/"/>
-       <jar jarfile="JRIEngine-${rserve.version}-source.jar" basedir="${dir.jriengine}"/>
+       <move file="${dir.jriengine}/JRIEngine.jar" tofile="JRIEngine-${jri.version}.jar"/>
+       <jar jarfile="JRIEngine-${jri.version}-javadoc.jar" basedir="${dir.jriengine}/doc/"/>
+       <jar jarfile="JRIEngine-${jri.version}-sources.jar" basedir="${dir.jriengine}"/>
    </target>
    
    <target name="sign_jars" depends="JRI,JRIEngine,REngine"
@@ -74,10 +73,10 @@
                    <include name="JRI-${jri.version}*"/>
                </jar>
                <jar jarfile="JRIEngine-bundle.jar" basedir="." >
-                   <include name="JRIEngine-${rserve.version}*"/>
+                   <include name="JRIEngine-${jri.version}*"/>
                </jar>
                <jar jarfile="REngine-bundle.jar" basedir="." >
-                   <include name="REngine-${rserve.version}*"/>
+                   <include name="REngine-${jri.version}*"/>
                </jar>
    </target>
 
@@ -116,26 +115,26 @@
                file="JRI-${jri.version}-javadoc.jar"
                classifier="javadoc"/>
 
-      <install pomFile="JRIEngine-${rserve.version}.pom"
-             file="JRIEngine-${rserve.version}.jar"/>
+      <install pomFile="JRIEngine-${jri.version}.pom"
+             file="JRIEngine-${jri.version}.jar"/>
 
-      <install pomFile="JRIEngine-${rserve.version}.pom"
-               file="JRIEngine-${rserve.version}-sources.jar"
+      <install pomFile="JRIEngine-${jri.version}.pom"
+               file="JRIEngine-${jri.version}-sources.jar"
                classifier="sources"/>
 
-      <install pomFile="JRIEngine-${rserve.version}.pom"
-               file="JRIEngine-${rserve.version}-javadoc.jar"
+      <install pomFile="JRIEngine-${jri.version}.pom"
+               file="JRIEngine-${jri.version}-javadoc.jar"
                classifier="javadoc"/>
 
-      <install pomFile="REngine-${rserve.version}.pom"
-             file="REngine-${rserve.version}.jar"/>
+      <install pomFile="REngine-${jri.version}.pom"
+             file="REngine-${jri.version}.jar"/>
 
-      <install pomFile="REngine-${rserve.version}.pom"
-               file="REngine-${rserve.version}-sources.jar"
+      <install pomFile="REngine-${jri.version}.pom"
+               file="REngine-${jri.version}-sources.jar"
                classifier="sources"/>
 
-      <install pomFile="REngine-${rserve.version}.pom"
-               file="REngine-${rserve.version}-javadoc.jar"
+      <install pomFile="REngine-${jri.version}.pom"
+               file="REngine-${jri.version}-javadoc.jar"
                classifier="javadoc"/>
    </target> 
 </project>
