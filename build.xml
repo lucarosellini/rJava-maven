@@ -1,22 +1,37 @@
 <?xml version="1.0"?>
-<project name="JAR Demos" default="jar1" basedir=".">
-    <property name="rserve.version" value="1.7-0"/>
-    <property name="jri.version" value="0.9-4"/>
+<project name="JAR Demos" default="bundles" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+    <property name="rserve.version" value="1.7-3"/>
+    <property name="jri.version" value="0.9-7"/>
     <property name="dir.jri" value="rJava/jri/"/>
-    <property name="dir.jriengine" value="Rserve/clients/java-new/JRI/"/>
-    <property name="dir.rengine" value="Rserve/clients/java-new/"/>
+    <property name="dir.jriengine" value="rJava/jri/REngine/JRI"/>
+    <property name="dir.rengine" value="rJava/jri/REngine"/>
+    <property name="maven.version" value="3.0.3" />
+    <path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.1.3.jar" />
+
+    <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+           uri="antlib:org.apache.maven.artifact.ant"
+           classpathref="maven-ant-tasks.classpath" />
+
   <target name="jri">
+      <exec executable="sh" dir="${dir.jri}">
+ 	<arg value="configure"/>
+      </exec>
+
       <exec executable="make" dir="${dir.jri}">
           <arg value="src/JRI.jar"/>
         <arg value="doc"/>
       </exec>
   </target>
   <target name="rengine" depends="jri">
+       <!--exec executable="sh" dir="${dir.jri}">
+        <arg value="configure"/>
+      </exec-->
       <exec executable="make" dir="${dir.rengine}">
         <arg value="REngine.jar"/>
         <arg value="doc"/>
       </exec>
   </target>
+
   <target name="jriengine" depends="rengine">
       <exec executable="make" dir="${dir.jriengine}">
         <arg value="JRIEngine.jar"/>
@@ -25,6 +40,7 @@
       <javadoc sourcepath="${dir.jriengine}" destdir="${dir.jriengine}/doc">
       </javadoc>
   </target>
+
    <target name="JRI" depends="jri" description="Build all JRI artifacts">
       <jar jarfile="JRI-${jri.version}-javadoc.jar" basedir="${dir.jri}/JavaDoc/"/>
       <jar jarfile="JRI-${jri.version}-source.jar" basedir="${dir.jri}"/>
@@ -40,6 +56,7 @@
        <jar jarfile="JRIEngine-${rserve.version}-javadoc.jar" basedir="${dir.jriengine}/doc/"/>
        <jar jarfile="JRIEngine-${rserve.version}-source.jar" basedir="${dir.jriengine}"/>
    </target>
+   
    <target name="sign_jars" depends="JRI,JRIEngine,REngine"
                    description="Sign rJava source jars">
        <apply executable="gpg">
@@ -63,4 +80,62 @@
                    <include name="REngine-${rserve.version}*"/>
                </jar>
    </target>
+
+   <target name="artifacts" depends="JRI,JRIEngine,REngine"/>
+
+   <target name="installinit">
+
+    
+    <macrodef name="install">
+        <attribute name="pomFile"/>
+        <attribute name="file"/>
+        <attribute name="classifier" default=""/>
+        <attribute name="packaging" default="jar"/>
+        <sequential>
+          <artifact:mvn mavenVersion="${maven.version}" fork="true" failonerror="true">
+            <arg value="org.apache.maven.plugins:maven-install-plugin:2.3.1:install-file" />
+            <arg value="-DpomFile=@{pomFile}" />
+            <arg value="-Dfile=@{file}" />
+            <arg value="-Dclassifier=@{classifier}" />
+            <arg value="-Dpackaging=@{packaging}" />
+          </artifact:mvn>
+        </sequential>
+      </macrodef>
+    </target>
+
+    <target name="install-all" depends="installinit,artifacts">
+
+      <install pomFile="JRI-${jri.version}.pom"
+             file="JRI-${jri.version}.jar"/>
+
+      <install pomFile="JRI-${jri.version}.pom"
+               file="JRI-${jri.version}-sources.jar"
+               classifier="sources"/>
+
+      <install pomFile="JRI-${jri.version}.pom"
+               file="JRI-${jri.version}-javadoc.jar"
+               classifier="javadoc"/>
+
+      <install pomFile="JRIEngine-${rserve.version}.pom"
+             file="JRIEngine-${rserve.version}.jar"/>
+
+      <install pomFile="JRIEngine-${rserve.version}.pom"
+               file="JRIEngine-${rserve.version}-sources.jar"
+               classifier="sources"/>
+
+      <install pomFile="JRIEngine-${rserve.version}.pom"
+               file="JRIEngine-${rserve.version}-javadoc.jar"
+               classifier="javadoc"/>
+
+      <install pomFile="REngine-${rserve.version}.pom"
+             file="REngine-${rserve.version}.jar"/>
+
+      <install pomFile="REngine-${rserve.version}.pom"
+               file="REngine-${rserve.version}-sources.jar"
+               classifier="sources"/>
+
+      <install pomFile="REngine-${rserve.version}.pom"
+               file="REngine-${rserve.version}-javadoc.jar"
+               classifier="javadoc"/>
+   </target> 
 </project>
