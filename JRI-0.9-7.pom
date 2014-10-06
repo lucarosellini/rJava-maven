@@ -1,14 +1,14 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.rforge<groupId>
-  <artifactId>JRIEngine</artifactId>
+  <groupId>net.rforge</groupId>
+  <artifactId>JRI</artifactId>
   <packaging>jar</packaging>
   <name>JRI core</name>
-  <version>1.7-0</version>
+  <version>0.9-7</version>
   <description>
 JRI is a Java/R Interface, which allows to run R inside Java applications as a single thread. Basically it loads R dynamic library into Java and provides a Java API to R functionality. It supports both simple calls to R functions and a full running REPL.
 </description>
-  <url>http://www.rforge.net/Rserve/index.html</url>
+  <url>http://www.rforge.net/JRI/index.html</url>
   <licenses>
     <license>
       <name>Lesser General Public License, Version 2.0</name>
@@ -17,7 +17,7 @@ JRI is a Java/R Interface, which allows to run R inside Java applications as a s
     </license>
   </licenses>
   <scm>
-    <url>svn://svn.rforge.net/Rserve/trunk</url>
+    <url>svn://svn.rforge.net/org/trunk/rosuda/JRI</url>
   </scm>
   <developers>
     <developer>
@@ -26,16 +26,4 @@ JRI is a Java/R Interface, which allows to run R inside Java applications as a s
       <email>simon.urbanek@r-project.org</email>
     </developer>
   </developers>
-  <dependencies>
-     <dependency>
-      <groupId>net.rforge</groupId>
-      <artifactId>JRI</artifactId>
-      <version>0.9-4</version>
-    </dependency>
-    <dependency>
-      <groupId>net.rforge</groupId>
-      <artifactId>REngine</artifactId>
-      <version>0.9-4</version>
-    </dependency>
-  </dependencies>
 </project>
