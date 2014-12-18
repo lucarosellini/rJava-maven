@@ -1,2 +1,5 @@
 rJava/*
 *.jar
+*.jar.asc
+*.pom.asc
+Rserve/*
