@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <project name="JAR Demos" default="bundles" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
     <property name="jri.version" value="0.9-7"/>
+    
     <property name="dir.jri" value="rJava/jri/"/>
     <property name="dir.jriengine" value="rJava/jri/REngine/JRI"/>
     <property name="dir.rengine" value="rJava/jri/REngine"/>
+
     <property name="maven.version" value="3.0.3" />
     <path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.1.3.jar" />
 
@@ -42,20 +44,20 @@
 
    <target name="JRI" depends="jri" description="Build all JRI artifacts">
       <jar jarfile="JRI-${jri.version}-javadoc.jar" basedir="${dir.jri}/JavaDoc/"/>
-      <jar jarfile="JRI-${jri.version}-sources.jar" basedir="${dir.jri}"/>
+      <jar jarfile="JRI-${jri.version}-sources.jar" basedir="${dir.jri}"  includes="*.java"/>
       <move file="${dir.jri}/src/JRI.jar" tofile="JRI-${jri.version}.jar"/>
    </target>
    <target name="REngine" depends="rengine" description="Build all REngine artifacts">
        <move file="${dir.rengine}/REngine.jar" tofile="REngine-${jri.version}.jar"/>
        <jar jarfile="REngine-${jri.version}-javadoc.jar" basedir="${dir.rengine}/doc/"/>
-       <jar jarfile="REngine-${jri.version}-sources.jar" basedir="${dir.rengine}"/>
+       <jar jarfile="REngine-${jri.version}-sources.jar" basedir="${dir.rengine}" includes="*.java"/>
    </target>
    <target name="JRIEngine" depends="jriengine" description="Build all JRIEngine artifacts">
        <move file="${dir.jriengine}/JRIEngine.jar" tofile="JRIEngine-${jri.version}.jar"/>
        <jar jarfile="JRIEngine-${jri.version}-javadoc.jar" basedir="${dir.jriengine}/doc/"/>
-       <jar jarfile="JRIEngine-${jri.version}-sources.jar" basedir="${dir.jriengine}"/>
+       <jar jarfile="JRIEngine-${jri.version}-sources.jar" basedir="${dir.jriengine}" includes="*.java"/>
    </target>
-   
+
    <target name="sign_jars" depends="JRI,JRIEngine,REngine"
                    description="Sign rJava source jars">
        <apply executable="gpg">
@@ -84,7 +86,7 @@
 
    <target name="installinit">
 
-    
+
     <macrodef name="install">
         <attribute name="pomFile"/>
         <attribute name="file"/>
@@ -136,5 +138,5 @@
       <install pomFile="REngine-${jri.version}.pom"
                file="REngine-${jri.version}-javadoc.jar"
                classifier="javadoc"/>
-   </target> 
+   </target>
 </project>
