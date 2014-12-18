@@ -1,6 +1,6 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.rforge</groupId>
+  <groupId>com.github.lucarosellini.rJava</groupId>
   <artifactId>JRI</artifactId>
   <packaging>jar</packaging>
   <name>JRI core</name>

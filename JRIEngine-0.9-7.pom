@@ -1,6 +1,6 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.rforge</groupId>
+  <groupId>com.github.lucarosellini.rJava</groupId>
   <artifactId>JRIEngine</artifactId>
   <packaging>jar</packaging>
   <name>JRI core</name>
@@ -28,12 +28,12 @@ JRI is a Java/R Interface, which allows to run R inside Java applications as a s
   </developers>
   <dependencies>
      <dependency>
-      <groupId>net.rforge</groupId>
+      <groupId>com.github.lucarosellini.rJava</groupId>
       <artifactId>JRI</artifactId>
       <version>0.9-7</version>
     </dependency>
     <dependency>
-      <groupId>net.rforge</groupId>
+      <groupId>com.github.lucarosellini.rJava</groupId>
       <artifactId>REngine</artifactId>
       <version>0.9-7</version>
     </dependency>
