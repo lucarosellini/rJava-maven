@@ -9,6 +9,15 @@ artifacts from [Rserve](http://www.rforge.net/Rserve/index.html).
 
 **Note**: Even though the documentation for REngine and JRIEngine are combined, they are released as two different artifacts.
 
+##Use pre-built artifacts using the following maven dependency:
+	<dependency>
+		<groupId>com.github.lucarosellini.rJava</groupId>
+		<artifactId>JRIEngine</artifactId>
+		<version>0.9-7</version>
+	</dependency>
+
+This will bring both JRI and REngine to your dependency tree.
+
 ##Basics
 The ant script `build.xml` contains all the targets necessary.
 * `{JRI|REngine|JRIEngine}` creates compiled, source, and javadoc jars for the JRI, REngine or JRIEngine packages.
